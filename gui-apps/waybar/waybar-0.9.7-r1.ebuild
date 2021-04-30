@@ -19,7 +19,7 @@ S="${WORKDIR}/${PN^}-${PV}"
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="mpd network popups pulseaudio tray +udev wifi"
+IUSE="mpd network popups pulseaudio tray +udev wifi sndio"
 
 BDEPEND="
 	>=app-text/scdoc-1.9.2
@@ -41,6 +41,7 @@ DEPEND="
 	network? ( dev-libs/libnl:3 )
 	popups? ( gui-libs/gtk-layer-shell )
 	pulseaudio? ( media-sound/pulseaudio )
+	sndio? ( >=media-sound/sndio-1.7.0 )
 	tray? (
 		dev-libs/libdbusmenu[gtk3]
 		dev-libs/libappindicator
@@ -59,7 +60,7 @@ src_configure() {
 		$(meson_feature tray dbusmenu-gtk)
 		$(meson_feature udev libudev)
 		$(meson_feature wifi rfkill)
-		-Dsndio=disabled
+		$(meson_feature sndio)
 	)
 	meson_src_configure
 }
